@@ -17,7 +17,7 @@ mkdir ping && cd ping
 
 
 
-Create a new file called app.py and put the following code in it:
+Create a new file called `app.py` and put the following code in it:
 
 ```python
 from flask import Flask
@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
 This application will make a GET request to the 'pong' service at the '/' endpoint when it receives a GET request at the '/' endpoint.
 
-Now create a Dockerfile in the same directory:
+Now create a `Dockerfile` in the same directory:
 
 ```Dockerfile
 FROM python:3.8-slim-buster
@@ -59,7 +59,7 @@ CMD [ "python3", "app.py" ]
 
 This will create a Docker image with your Python application.
 
-In the same directory, create a requirements.txt file:
+In the same directory, create a `requirements.txt` file:
 
 ```makefile
 Flask==2.0.1
@@ -77,7 +77,7 @@ cd ../ && mkdir pong && cd pong
 
 
 
-Create a new file called app.py and put the following code in it:
+Create a new file called `app.py` and put the following code in it:
 
 ```python
 from flask import Flask
@@ -95,7 +95,7 @@ if __name__ == '__main__':
 
 This application will return 'Pong!' when it receives a GET request at the '/' endpoint.
 
-Now create a Dockerfile in the same directory:
+Now create a `Dockerfile` in the same directory:
 
 ```Dockerfile
 FROM python:3.8-slim-buster
@@ -112,7 +112,7 @@ CMD [ "python3", "app.py" ]
 
 
 
-In the same directory, create a requirements.txt file:
+In the same directory, create a `requirements.txt` file:
 
 ```makefile
 Flask==2.0.1
@@ -179,18 +179,20 @@ kubectl patch deployment pong-service -p '{"spec":{"template":{"spec":{"containe
 
 
 
-Expose the deployments:
+### Exposing the deployments:
 
-If you have already exposed these deployments previously, you will get an error. If that's the case, you can delete the existing services first:
+> If you have already exposed these deployments previously, you will get an error. If that's the case, you can delete the existing deployments and services first:
 
 ```bash
+kubectl delete deployment ping-service
 kubectl delete service ping-service
+
+kubectl delete deployment pong-service
 kubectl delete service pong-service
 ```
 
 
-
-Then you can expose the deployments:
+To expose the deployments run:
 
 ```bash
 kubectl expose deployment ping-service --type=NodePort --port=5000
@@ -199,7 +201,7 @@ kubectl expose deployment pong-service --type=ClusterIP --port=5000
 
 
 
-Test the services:
+## Step 6: Test the services:
 
 To get the URL of the ping-service, you can run:
 
