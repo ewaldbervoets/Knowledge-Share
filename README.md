@@ -177,7 +177,9 @@ docker build -t pong-service .
 
 ## Step 5: Deploy the applications to Minikube
 
-You should now have ping-service and pong-service images in your Minikube Docker environment.
+At this point, we should have two Docker images, `ping-service` and `pong-service`, built and ready in our Minikube's Docker environment.
+
+The next task is to create Kubernetes deployments for our services. A Deployment is a Kubernetes resource where we specify the desired state for our application. It allows Kubernetes to change the actual state to the desired state at a controlled rate.
 
 Create the deployments:
 
@@ -186,14 +188,42 @@ kubectl create deployment ping-service --image=ping-service:latest
 kubectl create deployment pong-service --image=pong-service:latest
 ```
 
+Now, Kubernetes knows about our applications and how to run them, but it's still pulling the images from the default Docker environment. We need to tell Kubernetes to use the images we built inside the Minikube environment.
 
 
 Update the deployments to use the local image:
+
+We can update the deployments to use the local Docker images by patching them with an `imagePullPolicy` of `Never`. This means that Kubernetes will never try to pull the image from a registry, but instead, it will use the local Docker image.
 
 ```bash
 kubectl patch deployment ping-service -p '{"spec":{"template":{"spec":{"containers":[{"name":"ping-service","imagePullPolicy":"Never"}]}}}}'
 kubectl patch deployment pong-service -p '{"spec":{"template":{"spec":{"containers":[{"name":"pong-service","imagePullPolicy":"Never"}]}}}}'
 ```
+
+> **Note:** Instead of patching the deployment through the cli, deployments are usually declared through YAML files. This is what the YAML file of the ping service would look like after patching the `imagePullPolicy`:
+>
+>```yaml
+>apiVersion: apps/v1
+>kind: Deployment
+>metadata:
+>  name: ping-service
+>spec:
+>  replicas: 1
+>  selector:
+>    matchLabels:
+>      app: ping-service
+>  template:
+>    metadata:
+>      labels:
+>        app: ping-service
+>    spec:
+>      containers:
+>      - name: ping-service
+>        image: ping-service:latest
+>        imagePullPolicy: Never
+>```
+>
+>
 
 
 
