@@ -1,4 +1,4 @@
-# Code along - Introduction to Kubernetes
+# Code along - Kubernetes: Ping Pong
 
 ## Before you begin
 
@@ -181,7 +181,7 @@ At this point, we should have two Docker images, `ping-service` and `pong-servic
 
 The next task is to create Kubernetes deployments for our services. A Deployment is a Kubernetes resource where we specify the desired state for our application. It allows Kubernetes to change the actual state to the desired state at a controlled rate.
 
-Create the deployments:
+### Creating the deployments:
 
 ```bash
 kubectl create deployment ping-service --image=ping-service:latest
@@ -191,7 +191,7 @@ kubectl create deployment pong-service --image=pong-service:latest
 Now, Kubernetes knows about our applications and how to run them, but it's still pulling the images from the default Docker environment. We need to tell Kubernetes to use the images we built inside the Minikube environment.
 
 
-Update the deployments to use the local image:
+### Update the deployments to use local images:
 
 We can update the deployments to use the local Docker images by patching them with an `imagePullPolicy` of `Never`. This means that Kubernetes will never try to pull the image from a registry, but instead, it will use the local Docker image.
 
@@ -229,15 +229,15 @@ kubectl patch deployment pong-service -p '{"spec":{"template":{"spec":{"containe
 
 ### Exposing the deployments:
 
-> If you have already exposed these deployments previously, you might get an error. If that's the case, you can delete the existing deployments and services first:
-
-```bash
-kubectl delete deployment ping-service
-kubectl delete service ping-service
-
-kubectl delete deployment pong-service
-kubectl delete service pong-service
-```
+> **Note:** If you have already exposed these deployments previously, you might get an error. If that's the case, you can delete the existing deployments and services first:
+>
+> ```bash
+> kubectl delete deployment ping-service
+> kubectl delete service ping-service
+>
+> kubectl delete deployment pong-service
+> kubectl delete service pong-service
+>```
 
 
 To expose the deployments run:
