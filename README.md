@@ -240,13 +240,14 @@ kubectl patch deployment pong-service -p '{"spec":{"template":{"spec":{"containe
 >```
 
 
-To expose the deployments run:
+Run the following commands to expose the `ping-service` and `pong-service` deployments:
 
 ```bash
 kubectl expose deployment ping-service --type=NodePort --port=5000
 kubectl expose deployment pong-service --type=ClusterIP --port=5000
 ```
 
+By running these commands, we create Kubernetes services that expose our deployments to network traffic. The `ping-service` is exposed externally through a static port on each Node in the cluster. On the other hand, the `pong-service` is exposed internally within the cluster. The `--port=5000` argument in both commands sets the network port through which the services will be accessible.
 
 
 ## Step 6: Test the services:
