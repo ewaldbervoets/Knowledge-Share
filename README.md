@@ -259,3 +259,11 @@ minikube service ping-service --url
 ```
 
 Put this url in your browser or use `curl` to test your PingPong kubernetes application.
+
+Congratulations, you have successfully created a PingPong application in Kubernetes!
+
+### Useful links
+
+[`kubectl` cheat sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+
+[Minikube documentation](https://minikube.sigs.k8s.io/docs/)
